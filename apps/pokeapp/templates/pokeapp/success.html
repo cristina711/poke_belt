@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+            <meta charset="UTF-8">
+            <title>Success</title>
+            <style>
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+                
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+                
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                }
+            </style>
+    </head>
+
+    <body>
+        <h1>Welcome! {{user.first_name}} Succesfully logged in!</h1>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div>
+            <a href="/logout">Logout</a></h4>
+            <hr>
+            <h3>Welcome: {{user.first_name}} {{user.last_name}}</h3>
+            {% if user_poke_count.count == 0 %}
+                <h3>No one has poked you yet</h3>
+            {%else %}
+                <h3> {{user_poke_count.count}} people poked you! </h3>
+                
+                <h4>People you may want to poke</h4>
+                {% for list_of_user in list_of_users %}
+                    {{list_of_user.poker.first_name}}
+                <br>
+                {%endfor%}
+            {%endif%}
+            
+            <hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Alias</th>
+                        <th>Email Address</th>
+                        <th>Poke History</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                                
+                                <td>Qian</td>
+                                <td>Yang</td>
+                                <td>cristina711@outlook.com</td>
+                                <td>0 pokes</td>
+                                <td><a href="/pokes/{{user.id}}/"><button>Poke</button></a></td>
+                                
+                              
+                            
+                            </tr>
+                {% for user in users %}
+                    <tr>
+                        <td>{{user.first_name}}</td>
+                        <td>{{user.last_name}}</td>
+                        <td>{{user.email}}</td>
+                        
+                {% for poke in pokes %}
+                    {% if poke.poked_id == user.id %}
+                        <td>{{user.pokedpokes.count}}</td>
+                    {%endif%}
+                {%endfor%}
+                        <td><a href="/pokes/{{user.id}}/"><button class="btn btn-success">Poke</button></a></td>
+                    </tr>
+        
+                {%endfor%}
+                </tbody>
+            </table>
+        
+        </div>
+    </body>
+</html>
